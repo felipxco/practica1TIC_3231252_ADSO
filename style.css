@@ -1,10 +1,32 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #0d0d0d;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#app {
+  text-align: center;
+}
+
+#player {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .board {
   display: flex;
   flex-direction: column;
+  background-color: #1a1a1a;
+  padding: 5px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(173, 255, 47, 0.2);
 }
 
 .row {
@@ -14,30 +36,54 @@ body {
 .cell {
   width: 100px;
   height: 100px;
-  border: solid 1px black;
-  font-size: 38px;
+  background-color: #121212;
+  border: solid 2px #333;
+  font-size: 42px;
   font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/*esto es para que salga una animacion al aparece o seleccionar una ficha*/
+.cell:hover {
+  background-color: #1f1f1f;
+  border-color: #76ff03;
+}
+
+/* Estilo único y personalizado para las fichas */
+.cell[data-row] {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Si quieres diferenciar visualmente la X y la O con colores únicos */
+.cell:contains("X") {
+  color: #ff3366;
+}
+
+.cell:contains("O") {
+  color: #76ff03;
+}
+
+/* Animación de aparición */
 @keyframes popIn {
   0% {
-    transform: scale(0);
+    transform: scale(0) rotate(-45deg);
     opacity: 0;
   }
 
   70% {
-    transform: scale(1.1);
+    transform: scale(1.15) rotate(10deg);
     opacity: 1;
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
     opacity: 1;
   }
 }
 
-/* esto es para aplicar la animación a las celdas que ya tienen una ficha  */
 .cell:not(:empty) {
-  animation: popIn 0.25s ease-in-out forwards;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
