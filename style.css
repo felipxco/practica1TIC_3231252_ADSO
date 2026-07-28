@@ -6,13 +6,38 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .row {
   display: flex;
 }
+
 .cell {
   width: 100px;
   height: 100px;
   border: solid 1px black;
   font-size: 38px;
   font-weight: bold;
+}
+
+/*esto es para que salga una animacion al aparece o seleccionar una ficha*/
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* esto es para aplicar la animación a las celdas que ya tienen una ficha  */
+.cell:not(:empty) {
+  animation: popIn 0.25s ease-in-out forwards;
 }
