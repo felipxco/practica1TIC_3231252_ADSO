@@ -31,8 +31,32 @@ function renderBoard() {
     return `<div class="row">${cells.join("")}</div>`;
   });
   document.querySelector("#board").innerHTML = html.join("");
-  playerPlays();
+
 }
+
+document.querySelector("#board").addEventListener("click", (e) => {
+  if (!e.target.classList.contains("cell")) return;
+  if (!gameActive || turn !== 0) return;
+
+  const row = parseInt(e.target.getAttribute("data-row"));
+  const col = parseInt(e.target.getAttribute("data-col"));
+
+  if (board[row][col] === "") {
+    board[row][col] = "O";
+    turn = 1;
+
+    renderBoard();
+    renderPlayer();
+
+    const won = checkIfWinner();
+
+    if (won === "none") {
+      setTimeout(() => {
+        PCPlaysV2();
+      }, 400);
+    }
+  }
+});
 
 function startGame() {
 
