@@ -18,14 +18,15 @@ let board = [
 let turn = 0; //0 user, 1 = pc
 
 function renderBoard() {
-  const html = board.map((row) => {
-    const cells = row.map((cell) => {
-      return `<button class="cell">${cell}</button>`;
+ 
+  const html = board.map((row, rowIndex) => {
+    const cells = row.map((cell, colIndex) => {
+      return `<button class="cell" data-row="${rowIndex}" data-col="${colIndex}">${cell}</button>`;
     });
     return `<div class="row">${cells.join("")}</div>`;
   });
-
   document.querySelector("#board").innerHTML = html.join("");
+  playerPlays(); 
 }
 
 startGame();
@@ -128,23 +129,33 @@ function createChild(node, i, j, nturn, level) {
 }
 
 function playerPlays() {
-  console.log("player plays");
+  const cells = document.querySelectorAll(".cell");
+  
+  cells.forEach((buttonCell) => {
+    buttonCell.addEventListener("click", (e) => {
+    
+      if (turn !== 0) return; 
+      
+      const row = parseInt(e.target.getAttribute("data-row"));
+      const col = parseInt(e.target.getAttribute("data-col"));
 
-  document.querySelectorAll(".cell").forEach((buttonCell, i) => {
-    const row = i % 3;
-    const column = parseInt(i / 3);
-    if (board[column][row] === "") {
-      buttonCell.addEventListener("click", (e) => {
-        board[column][row] = "O";
-        buttonCell.textContent = board[column][row];
-        turn = 1;
+      
+      if (board[row][col] === "") {
+        board[row][col] = "O";
+        turn = 1; 
+        
+        renderBoard();
+        
         const won = checkIfWinner();
-        debugger;
+        
         if (won === "none") {
-          PCPlaysV2();
+
+          setTimeout(() => {
+            PCPlaysV2();
+          }, 50);
         }
-      });
-    }
+      }
+    });
   });
 }
 
