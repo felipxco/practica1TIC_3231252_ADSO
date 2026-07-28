@@ -19,6 +19,7 @@ function endGame(message) {
 
 document.querySelector("#restart-btn").addEventListener("click", () => {
   document.querySelector("#restart-btn").style.display = "none";
+  startGame(); // <--- Esta línea es la que faltaba para reiniciar el juego
 });
 
 function renderBoard() {
